@@ -1,7 +1,24 @@
 define("UsrRealtyPage", [], function() {
 	return {
 		entitySchemaName: "UsrRealty",
-		attributes: {},
+		attributes: {
+			"UsrCommissionAttributes": {
+				dataValueType: Terrasoft.DataValueType.FLOAT2,
+				type: Terrasoft.ViewModelColumnType.VIRTUAL_COLUMN,
+				value: 0,
+				dependencies: [
+                    {
+                        columns: ["UsrPrice", "UsrOfferTypeRealty"],
+                        methodName: "calculateCommission"
+                    }
+                ]
+			},
+			"UsrOfferTypeRealty": {
+				lookupListConfig: {
+					columns: ["UsrCommissionRate"]
+				}
+			}
+		},
 		modules: /**SCHEMA_MODULES*/{}/**SCHEMA_MODULES*/,
 		details: /**SCHEMA_DETAILS*/{
 			"Files": {
@@ -47,7 +64,27 @@ define("UsrRealtyPage", [], function() {
 				}
 			}
 		}/**SCHEMA_BUSINESS_RULES*/,
-		methods: {},
+		methods: {
+			valueValidator: function(value, field) {
+				var warning = '';
+				if(value < 0) { warning = this.get("Resources.Strings.WarningMessageValidator"); }
+				return { invalidMessage: warning };
+			},
+			setValidationConfig: function() {
+                this.callParent(arguments);
+                this.addColumnValidator("UsrPrice", this.valueValidator);
+                this.addColumnValidator("UsrArea", this.valueValidator);
+            },
+			calculateCommission: function() {
+				var usrPrice = this.get("UsrPrice");
+				if(!usrPrice) { usrPrice = 0; }
+				var usrOfferTypeRealty = this.get("UsrOfferTypeRealty");
+				var usrCommissionRate = 0;
+				if(usrOfferTypeRealty) { usrCommissionRate = usrOfferTypeRealty.UsrCommissionRate; }
+				var usrCommission = usrPrice * usrCommissionRate;
+				this.set("UsrCommissionAttributes", usrCommission);
+			}
+		},
 		dataModels: /**SCHEMA_DATA_MODELS*/{}/**SCHEMA_DATA_MODELS*/,
 		diff: /**SCHEMA_DIFF*/[
 			{
@@ -108,23 +145,22 @@ define("UsrRealtyPage", [], function() {
 				"name": "UsrArea",
 				"values": {
 					"layout": {
-						"colSpan": 12,
+						"colSpan": 24,
 						"rowSpan": 1,
 						"column": 0,
-						"row": 0,
-						"layoutName": "Header"
+						"row": 3,
+						"layoutName": "ProfileContainer"
 					},
 					"bindTo": "UsrArea",
 					"tip": {
 						"content": {
 							"bindTo": "Resources.Strings.UsrAreaHelp"
 						}
-					},
-					"enabled": true
+					}
 				},
-				"parentName": "Header",
+				"parentName": "ProfileContainer",
 				"propertyName": "items",
-				"index": 0
+				"index": 3
 			},
 			{
 				"operation": "insert",
@@ -133,7 +169,7 @@ define("UsrRealtyPage", [], function() {
 					"layout": {
 						"colSpan": 12,
 						"rowSpan": 1,
-						"column": 12,
+						"column": 0,
 						"row": 0,
 						"layoutName": "Header"
 					},
@@ -144,6 +180,32 @@ define("UsrRealtyPage", [], function() {
 						}
 					},
 					"enabled": true
+				},
+				"parentName": "Header",
+				"propertyName": "items",
+				"index": 0
+			},
+			{
+				"operation": "insert",
+				"name": "Commission",
+				"values": {
+					"layout": {
+						"colSpan": 12,
+						"rowSpan": 1,
+						"column": 12,
+						"row": 0,
+						"layoutName": "Header"
+					},
+					"bindTo": "UsrCommissionAttributes",
+					"tip": {
+						"content": {
+							"bindTo": "Resources.Strings.UsrCommissionHelp"
+						}
+					},
+					"enabled": true,
+                    "caption": {
+                        "bindTo": "Resources.Strings.UsrCommissionCaption"
+                    }
 				},
 				"parentName": "Header",
 				"propertyName": "items",
