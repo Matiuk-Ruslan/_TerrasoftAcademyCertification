@@ -19,8 +19,7 @@ define("UsrRealtyViewsPage", [], function() {
 						"row": 0,
 						"layoutName": "Header"
 					},
-					"bindTo": "UsrResponsible",
-					"enabled": false
+					"bindTo": "UsrResponsible"
 				},
 				"parentName": "Header",
 				"propertyName": "items",

@@ -2,7 +2,7 @@ define("UsrRealtyPage", [], function() {
 	return {
 		entitySchemaName: "UsrRealty",
 		attributes: {
-			"UsrCommissionAttributes": {
+			"UsrCommissionAttribute": {
 				dataValueType: Terrasoft.DataValueType.FLOAT2,
 				type: Terrasoft.ViewModelColumnType.VIRTUAL_COLUMN,
 				value: 0,
@@ -65,6 +65,10 @@ define("UsrRealtyPage", [], function() {
 			}
 		}/**SCHEMA_BUSINESS_RULES*/,
 		methods: {
+			onEntityInitialized: function() {
+                this.callParent(arguments);
+				this.calculateCommission();
+			},
 			valueValidator: function(value, field) {
 				var warning = '';
 				if(value < 0) { warning = this.get("Resources.Strings.WarningMessageValidator"); }
@@ -82,7 +86,7 @@ define("UsrRealtyPage", [], function() {
 				var usrCommissionRate = 0;
 				if(usrOfferTypeRealty) { usrCommissionRate = usrOfferTypeRealty.UsrCommissionRate; }
 				var usrCommission = usrPrice * usrCommissionRate;
-				this.set("UsrCommissionAttributes", usrCommission);
+				this.set("UsrCommissionAttribute", usrCommission);
 			}
 		},
 		dataModels: /**SCHEMA_DATA_MODELS*/{}/**SCHEMA_DATA_MODELS*/,
@@ -196,15 +200,15 @@ define("UsrRealtyPage", [], function() {
 						"row": 0,
 						"layoutName": "Header"
 					},
-					"bindTo": "UsrCommissionAttributes",
+					"bindTo": "UsrCommissionAttribute",
 					"tip": {
 						"content": {
-							"bindTo": "Resources.Strings.UsrCommissionHelp"
+							"bindTo": "Resources.Strings.CommissionHelp"
 						}
 					},
 					"enabled": true,
                     "caption": {
-                        "bindTo": "Resources.Strings.UsrCommissionCaption"
+                        "bindTo": "Resources.Strings.CommissionCaption"
                     }
 				},
 				"parentName": "Header",

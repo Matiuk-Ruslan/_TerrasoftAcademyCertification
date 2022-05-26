@@ -5,6 +5,7 @@ Name|Version|Description
 _TerrasoftAcademyCertification|v1.0.0|Инициализация пакета
 _TerrasoftAcademyCertification|v1.1.0|Сущность, деталь, справочники, интерфейс, бизнес-правило и данные
 _TerrasoftAcademyCertification|v1.2.0|Новые поля в объектах, валидация и расчет
+_TerrasoftAcademyCertification|v1.3.0|Веб-сервис
 
 ## Description
 
@@ -54,3 +55,6 @@ _TerrasoftAcademyCertification|v1.2.0|Новые поля в объектах, �
       * Валидация поля [`UsrArea` / Площадь]
       * Валидация поля [`UsrPrice` / Цена]
       * Расчет комиссии [`UsrCommission` / Коммисия]
+  * **Version:** v1.3.0
+    * Реализован веб-сервис `DataService`
+      * Endpoint: `{{siteAddress}}/0/rest/DataService/GetTotalPrice`

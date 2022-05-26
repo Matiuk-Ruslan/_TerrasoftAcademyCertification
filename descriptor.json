@@ -1,9 +1,9 @@
 {
   "Descriptor": {
     "UId": "ca09dfa5-ec2f-45d7-88f3-75443715095e",
-    "PackageVersion": "1.2.0",
+    "PackageVersion": "1.3.0",
     "Name": "_TerrasoftAcademyCertification",
-    "ModifiedOnUtc": "/Date(1653576563000)/",
+    "ModifiedOnUtc": "/Date(1653582490000)/",
     "Maintainer": "Customer",
     "DependsOn": [
       {

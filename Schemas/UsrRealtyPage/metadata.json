@@ -31,7 +31,7 @@
 }
 + MetaData.Schema.B2 {
   "UId": "0e64076c-410a-4013-8dcf-f7bf5e788f99",
-  "A2": "UsrCommissionHelp",
+  "A2": "CommissionHelp",
   "A3": "87ead965-e98b-4738-b042-ac1b9926dd74",
   "A4": "87ead965-e98b-4738-b042-ac1b9926dd74",
   "A5": "76a65228-8b50-4009-a4e3-79bdbcefef2a"
@@ -45,7 +45,7 @@
 }
 + MetaData.Schema.B2 {
   "UId": "35e93c70-ca09-e485-c331-453c9cb06485",
-  "A2": "UsrCommissionCaption",
+  "A2": "CommissionCaption",
   "A3": "87ead965-e98b-4738-b042-ac1b9926dd74",
   "A4": "87ead965-e98b-4738-b042-ac1b9926dd74",
   "A5": "76a65228-8b50-4009-a4e3-79bdbcefef2a"

@@ -4,7 +4,6 @@
 		<Items>
 			<Item Name="Caption" Value="Недвижимость" />
 			<Item Name="Columns.UsrArea.Caption" Value="Площадь" />
-			<Item Name="Columns.UsrCommission.Caption" Value="Коммисия" />
 			<Item Name="Columns.UsrName.Caption" Value="Name" />
 			<Item Name="Columns.UsrNotes.Caption" Value="Notes" />
 			<Item Name="Columns.UsrOfferTypeRealty.Caption" Value="Тип предложения" />
