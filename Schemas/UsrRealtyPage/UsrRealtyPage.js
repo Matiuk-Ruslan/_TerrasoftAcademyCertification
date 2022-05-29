@@ -1,4 +1,4 @@
-define("UsrRealtyPage", [], function() {
+define("UsrRealtyPage", ["ProcessModuleUtilities"], function(ProcessModuleUtilities) {
 	return {
 		entitySchemaName: "UsrRealty",
 		attributes: {
@@ -64,10 +64,20 @@ define("UsrRealtyPage", [], function() {
 				}
 			}
 		}/**SCHEMA_BUSINESS_RULES*/,
+		messages: {
+                "SetRealtyViews": {
+                    "mode": Terrasoft.MessageMode.BROADCAST,
+                    "direction": Terrasoft.MessageDirectionType.SUBSCRIBE
+                }
+            },
 		methods: {
 			onEntityInitialized: function() {
                 this.callParent(arguments);
 				this.calculateCommission();
+				this.sandbox.subscribe("SetRealtyViews", this.updateDetailRealtyViews, this);
+			},
+			updateDetailRealtyViews: function(args) { 
+				this.updateDetail( {detail: "UsrRealtyViewDetail"} ); 
 			},
 			valueValidator: function(value, field) {
 				var warning = '';
@@ -87,7 +97,27 @@ define("UsrRealtyPage", [], function() {
 				if(usrOfferTypeRealty) { usrCommissionRate = usrOfferTypeRealty.UsrCommissionRate; }
 				var usrCommission = usrPrice * usrCommissionRate;
 				this.set("UsrCommissionAttribute", usrCommission);
-			}
+			},
+			isActionEnabled: function () {
+                var selectedId = this.get("Id");
+                return selectedId ? true : false;
+            },
+			getActions: function() {
+				var actionMenuItems = this.callParent(arguments);
+				actionMenuItems.addItem(this.getButtonMenuItem( { Type: "Terrasoft.MenuSeparator", Caption: ""} ));
+				actionMenuItems.addItem(this.getButtonMenuItem( { "Caption": "Автоматическое создание записей",
+																  "Tag": "callAutomaticCreationOfRecords",
+																  "Enable": {bintTo: "isActionEnabled"} } 
+															  ));
+				return actionMenuItems;
+			},
+            callAutomaticCreationOfRecords: function () {
+                var realtyId = this.get("Id");
+                if (realtyId) {
+					var args = { sysProcessName: "UsrAutomaticCreationOfRecords", parameters: { RealtyId: realtyId } };
+					ProcessModuleUtilities.executeProcess(args);
+				}
+            }
 		},
 		dataModels: /**SCHEMA_DATA_MODELS*/{}/**SCHEMA_DATA_MODELS*/,
 		diff: /**SCHEMA_DIFF*/[

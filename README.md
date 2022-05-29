@@ -6,6 +6,7 @@ _TerrasoftAcademyCertification|v1.0.0|Инициализация пакета
 _TerrasoftAcademyCertification|v1.1.0|Сущность, деталь, справочники, интерфейс, бизнес-правило и данные
 _TerrasoftAcademyCertification|v1.2.0|Новые поля в объектах, валидация и расчет
 _TerrasoftAcademyCertification|v1.3.0|Веб-сервис
+_TerrasoftAcademyCertification|v1.4.0|Бизнес-процесс, публикация и подписка на сообщение, обновление детали
 
 ## Description
 
@@ -58,3 +59,11 @@ _TerrasoftAcademyCertification|v1.3.0|Веб-сервис
   * **Version:** v1.3.0
     * Реализован веб-сервис `DataService`
       * Endpoint: `{{siteAddress}}/0/rest/DataService/GetTotalPrice`
+  * **Version:** v1.4.0
+    * Обновлен бизнес-процесс `UsrAutomaticCreationOfRecords`
+      * Добавлена логика публикации сообщения по `WebSocket`
+    * Замещен модуль `ClientMessageBridge`
+      * Реализована рассылка сообщения `SetRealtyViews` внутри приложения
+    * Обновлен клиентский модуль `UsrRealtyPage`
+      * Реализована подписка на сообщение `SetRealtyViews`
+      * Добавлен метод обновления детали `UsrRealtyViewsDetail`
